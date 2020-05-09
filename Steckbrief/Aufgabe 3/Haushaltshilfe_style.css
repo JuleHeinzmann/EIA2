@@ -22,13 +22,13 @@ h2 {
 }
 
 
-#field1 {
+#form {
     position: relative;
 }
 
 #menge{
     position: absolute;
-    top: 20px;
+    top: 85px;
     left: 150px;
     
 }
@@ -37,7 +37,7 @@ h2 {
 
 #auswahlsupermarkt {
     position: absolute;
-    top: 20px;
+    top: 85px;
     left: 250px;
 }
 
