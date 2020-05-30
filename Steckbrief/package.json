@@ -1,0 +1,21 @@
+{
+  "name": "eiazwei",
+  "version": "1.0.0",
+  "description": "geil",
+  "main": "index.js",
+  "dependencies": {},
+  "devDependencies": {},
+  "scripts": {
+    "start": "node Steckbrief/Aufgabe 6/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JuleHeinzmann/EIA2.git"
+  },
+  "author": "jule heinzmann",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JuleHeinzmann/EIA2/issues"
+  },
+  "homepage": "https://github.com/JuleHeinzmann/EIA2#readme"
+}
