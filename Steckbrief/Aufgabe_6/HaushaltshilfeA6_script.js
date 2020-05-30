@@ -3,7 +3,7 @@ var HaushaltshilfeA6;
 (function (HaushaltshilfeA6) {
     window.addEventListener("load", handleLoad);
     //let url: string = "HaushaltshilfeA6.html";
-    let url = "http://localhost:5001";
+    let url = "https://eiahaushaltshilfe.herokuapp.com/";
     async function handleLoad() {
         let response = await fetch("Data3.json");
         let content = await response.text();

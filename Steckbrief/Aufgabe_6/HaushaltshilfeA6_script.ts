@@ -1,7 +1,7 @@
 namespace HaushaltshilfeA6 {
     window.addEventListener("load", handleLoad);
     //let url: string = "HaushaltshilfeA6.html";
-    let url: string = "http://localhost:5001";
+    let url: string = "https://eiahaushaltshilfe.herokuapp.com/";
 
     async function handleLoad(): Promise<void> {
         
