@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="zaubercanvas.css">
+    <script src="zaubercanvas.js"></script>
+    <script src="Moveable.js"></script>
+    <script src="Vector.js"></script>
+    <script src="Triangle.js"></script>
+    <script src="Circle.js"></script>
+    <script src="Star.js"></script>
+    <script src="Square.js"></script>
+    <script src="Server.js"></script>
+</head>
+<body>
+    <h1>Zauberbild</h1>
+    <p>Plaziere Symbole auf dem Canvas. Drücke "d" und klicke dann auf Symbole, um diese wieder zu löschen </p>
+    <canvas id="maincanvas"></canvas>
+    <div id="forms">
+        <div id= form1>
+            <canvas id="star" height="100" width="100"></canvas>
+        </div>
+        <div id="form2">
+            <canvas id="circle" height="100" width="100"></canvas>
+        </div>
+        <div id="form3">
+            <canvas id="square" height="100" width="100"></canvas>
+        </div>
+        <div id="form4">
+            <canvas id="triangle" height="100" width="100"></canvas>
+        </div>
+    </div>
+    <select name="Canvas" id="choosecanvas">
+        <option value="" disabled selected hidden>Wähle Canvasgröße</option>
+        <option value="Klein">Klein</option>
+        <option value="Mittel">Mittel</option>
+        <option value="Groß">Groß</option>
+    </select>
+    <select name="Background" id="Background">
+        <option value="" disabled selected hidden>Wähle Hintergrund</option>
+        <option value="blue">Blau</option>
+        <option value="yellow">Gelb</option>
+        <option value="grey">Grau</option>
+        <option value="beige">Beige</option>
+    </select>
+    <button id="save">Save</button>
+    <select name="Load" id="Load">
+        <option value="" disabled selected hidden>Load</option>
+    </select>
+</body>
+</html>
