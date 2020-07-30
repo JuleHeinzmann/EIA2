@@ -34,7 +34,7 @@ namespace Zaubercanvas {
         let query: URLSearchParams = new URLSearchParams(info);
         let response: Response = await fetch(url + "?savePicture&" + name + "&" + canvasQuery.toString() + "&" + query.toString());
         //let response: Response = await fetch(url + ",Name: " + name + ",Canvas: " + canvasQuery.toString() + ",Figures: " + query.toString());
-        await fetch(url + "?insertName&" + name);
+        //await fetch(url + "?insertName&" + name);
 
         let responseText: string = await response.text();
         if (responseText != "") {

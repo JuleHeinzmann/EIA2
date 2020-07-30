@@ -12,6 +12,7 @@ var Zaubercanvas;
     if (port == undefined)
         port = 5001;
     let databaseUrl = "mongodb+srv://MyMongoDBUser:baumkind@eia2-yxlor.mongodb.net/Endabgabe?retryWrites=true&w=majority";
+    let allpictures;
     startServer(port);
     connectToDatabase(databaseUrl);
     function startServer(_port) {
@@ -33,26 +34,27 @@ var Zaubercanvas;
         _response.setHeader("Access-Control-Allow-Origin", "*");
         if (_request.url) {
             let url = Url.parse(_request.url, true);
-            let splitURL = _request.url.split("&");
-            // for (let key in url.query) {
-            //     _response.write(key + ":" + url.query[key] + "<br/>");
-            // }
-            if (splitURL[0] == "/?insertName") {
-                let pictures = mongoClient.db("Endabgabe").collection("Images");
-                (await pictures).insertOne(url.query);
+            for (let key in url.query) {
+                _response.write(key + ":" + url.query[key] + "<br/>");
             }
-            if (splitURL[0] == "/?savePicture") {
-                let newCollection = mongoClient.db("Endabgabe").createCollection(splitURL[1]);
-                (await newCollection).insertOne(url.query);
-            }
-            // let jsonString: string = JSON.stringify(url.query);
-            // _response.write(jsonString);
-            //storeOrder(url.query);
+            let jsonString = JSON.stringify(url.query);
+            _response.write(jsonString);
+            storeOrder(url.query);
+            allpictures.push(url.query);
+        }
+        for (let item of allpictures) {
+            showOrder(item);
         }
         _response.end();
     }
-    // function storeOrder(_order: any): void {
-    //     orders.insert(_order);
-    // }
+    function storeOrder(_order) {
+        orders.insert(_order);
+    }
+    function showOrder(_order) {
+        let select = document.getElementById("Load");
+        let newOption = document.createElement("option");
+        newOption.text = _order[2];
+        select.add(newOption);
+    }
 })(Zaubercanvas = exports.Zaubercanvas || (exports.Zaubercanvas = {}));
 //# sourceMappingURL=Server2.js.map
