@@ -29,9 +29,9 @@ var Zaubercanvas;
         console.log(info);
         let canvasQuery = new URLSearchParams(canvasLook);
         let query = new URLSearchParams(info);
-        //let response: Response = await fetch(url + "?savePicture&" + name + "&" + canvasQuery.toString() + "&" + query.toString());
-        let response = await fetch(url + "Name:" + name + "Canvas" + canvasQuery.toString() + "Figures" + query.toString());
-        //await fetch(url + "?insertName&" + name);
+        let response = await fetch(url + "?savePicture&" + name + "&" + canvasQuery.toString() + "&" + query.toString());
+        //let response: Response = await fetch(url + ",Name: " + name + ",Canvas: " + canvasQuery.toString() + ",Figures: " + query.toString());
+        await fetch(url + "?insertName&" + name);
         let responseText = await response.text();
         if (responseText != "") {
             alert("Your picture " + _name + " has been saved!");

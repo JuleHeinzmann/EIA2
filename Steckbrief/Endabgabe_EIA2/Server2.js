@@ -27,24 +27,32 @@ var Zaubercanvas;
         orders = mongoClient.db("Endabgabe").collection("Images");
         console.log("Database connection ", orders != undefined);
     }
-    function handleRequest(_request, _response) {
+    async function handleRequest(_request, _response) {
         console.log("What's up?");
         _response.setHeader("content-type", "text/html; charset=utf-8");
         _response.setHeader("Access-Control-Allow-Origin", "*");
         if (_request.url) {
             let url = Url.parse(_request.url, true);
-            for (let key in url.query) {
-                _response.write(key + ":" + url.query[key] + "<br/>");
+            let splitURL = _request.url.split("&");
+            // for (let key in url.query) {
+            //     _response.write(key + ":" + url.query[key] + "<br/>");
+            // }
+            if (splitURL[0] == "/?insertName") {
+                let pictures = mongoClient.db("Endabgabe").collection("Images");
+                (await pictures).insertOne(url.query);
             }
-            let jsonString = JSON.stringify(url.query);
-            _response.write(jsonString);
-            console.log("urlquery:" + url.query);
-            storeOrder(url.query);
+            if (splitURL[0] == "/?savePicture") {
+                let newCollection = mongoClient.db("Endabgabe").createCollection(splitURL[1]);
+                (await newCollection).insertOne(url.query);
+            }
+            // let jsonString: string = JSON.stringify(url.query);
+            // _response.write(jsonString);
+            //storeOrder(url.query);
         }
         _response.end();
     }
-    function storeOrder(_order) {
-        orders.insert(_order);
-    }
+    // function storeOrder(_order: any): void {
+    //     orders.insert(_order);
+    // }
 })(Zaubercanvas = exports.Zaubercanvas || (exports.Zaubercanvas = {}));
 //# sourceMappingURL=Server2.js.map

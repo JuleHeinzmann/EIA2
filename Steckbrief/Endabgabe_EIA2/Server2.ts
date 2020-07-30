@@ -30,7 +30,7 @@ export namespace Zaubercanvas {
         console.log("Database connection ", orders != undefined);
     }
 
-    function handleRequest(_request: Http.IncomingMessage, _response: Http.ServerResponse): void {
+    async function handleRequest(_request: Http.IncomingMessage, _response: Http.ServerResponse): Promise<void> {
         console.log("What's up?");
 
         _response.setHeader("content-type", "text/html; charset=utf-8");
@@ -38,22 +38,30 @@ export namespace Zaubercanvas {
 
         if (_request.url) {
             let url: Url.UrlWithParsedQuery = Url.parse(_request.url, true);
-            for (let key in url.query) {
-                _response.write(key + ":" + url.query[key] + "<br/>");
+            let splitURL: string[] = _request.url.split("&");
+            // for (let key in url.query) {
+            //     _response.write(key + ":" + url.query[key] + "<br/>");
+            // }
+            if (splitURL[0] == "/?insertName") {
+                let pictures: Mongo.Collection = mongoClient.db("Endabgabe").collection("Images");
+                (await pictures).insertOne(url.query);
+
             }
+            if (splitURL[0] == "/?savePicture") {
+                let newCollection: Promise<Mongo.Collection> = mongoClient.db("Endabgabe").createCollection(splitURL[1]);
+                (await newCollection).insertOne(url.query);
+            }
+            // let jsonString: string = JSON.stringify(url.query);
+            // _response.write(jsonString);
 
-            let jsonString: string = JSON.stringify(url.query);
-            _response.write(jsonString);
-            console.log("urlquery:" + url.query);
-
-            storeOrder(url.query);
+            //storeOrder(url.query);
         }
 
         _response.end();
     }
 
-    function storeOrder(_order: any): void {
-        orders.insert(_order);
-    }
+    // function storeOrder(_order: any): void {
+    //     orders.insert(_order);
+    // }
 
 }
