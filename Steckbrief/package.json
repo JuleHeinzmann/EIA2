@@ -3,10 +3,13 @@
   "version": "1.0.0",
   "description": "geil",
   "main": "index.js",
-  "dependencies": {},
+  "dependencies": {
+    "@types/mongodb": "^3.5.20",
+    "mongodb": "^3.5.8"
+  },
   "devDependencies": {},
   "scripts": {
-    "start": "node Aufgabe_6/server.js"
+    "start": "node Endabgabe_EIA2/Server2.js"
   },
   "repository": {
     "type": "git",
