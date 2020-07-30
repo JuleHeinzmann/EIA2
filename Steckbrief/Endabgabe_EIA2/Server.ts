@@ -42,5 +42,13 @@ namespace Zaubercanvas {
         else {
             alert("An error has occurred during saving");
         }
+        console.log(responseText);
+    }
+
+    export async function loadPicture(): Promise<void> {
+        let name: string = savedpicture.value;
+        let response: Response = await fetch(url + "?" + "findPicture&" + name);
+        let responseText: string = await response.text();
+        console.log(responseText);
     }
 }

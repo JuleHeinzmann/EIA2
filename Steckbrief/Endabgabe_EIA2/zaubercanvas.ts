@@ -5,6 +5,7 @@ namespace Zaubercanvas {
     let backgroundImage: ImageData;
     let trash: boolean = false;
     let maincanvas: HTMLCanvasElement;
+    export let savedpicture: HTMLInputElement;
     function handleLoad(): void {
         drawforms();
         document.getElementById("choosecanvas")?.addEventListener("change", handleChange);
@@ -18,6 +19,8 @@ namespace Zaubercanvas {
         document.getElementById("maincanvas")?.addEventListener("click", function(): void {deleteform(<MouseEvent>event, trash); });
         document.addEventListener("keydown", function(): void {deletemode(<KeyboardEvent> event); });
         document.getElementById("save")?.addEventListener("click", getName);
+        savedpicture = <HTMLInputElement>document.getElementById("Load");
+        savedpicture.addEventListener("change", loadPicture);
         window.setInterval(update, 20);
     }
     function drawforms(): void {

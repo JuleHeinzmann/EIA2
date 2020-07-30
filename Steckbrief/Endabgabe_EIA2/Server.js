@@ -38,6 +38,14 @@ var Zaubercanvas;
         else {
             alert("An error has occurred during saving");
         }
+        console.log(responseText);
     }
+    async function loadPicture() {
+        let name = Zaubercanvas.savedpicture.value;
+        let response = await fetch(url + "?" + "findPicture&" + name);
+        let responseText = await response.text();
+        console.log(responseText);
+    }
+    Zaubercanvas.loadPicture = loadPicture;
 })(Zaubercanvas || (Zaubercanvas = {}));
 //# sourceMappingURL=Server.js.map

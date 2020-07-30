@@ -20,6 +20,8 @@ var Zaubercanvas;
         document.getElementById("maincanvas")?.addEventListener("click", function () { deleteform(event, trash); });
         document.addEventListener("keydown", function () { deletemode(event); });
         document.getElementById("save")?.addEventListener("click", getName);
+        Zaubercanvas.savedpicture = document.getElementById("Load");
+        Zaubercanvas.savedpicture.addEventListener("change", Zaubercanvas.loadPicture);
         window.setInterval(update, 20);
     }
     function drawforms() {
@@ -138,7 +140,7 @@ var Zaubercanvas;
             item.draw(canvas);
         }
     }
-    //ähnlich wie Luzia Gunzenhauser hab abgeschaut haha
+    //ähnlich wie Luzia Gunzenhauser
     function deleteform(_event, _trash) {
         console.log(trash);
         if (trash == true) {
