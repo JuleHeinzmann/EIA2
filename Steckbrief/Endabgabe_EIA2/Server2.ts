@@ -1,7 +1,6 @@
 import * as Http from "http";
 import * as Url from "url";
 import * as Mongo from "mongodb";
-import { ParsedUrlQuery } from "querystring";
 export namespace Zaubercanvas {
     let orders: Mongo.Collection;
     let options: Mongo.MongoClientOptions;
@@ -11,7 +10,6 @@ export namespace Zaubercanvas {
         port = 5001;
 
     let databaseUrl: string = "mongodb+srv://MyMongoDBUser:baumkind@eia2-yxlor.mongodb.net/Endabgabe?retryWrites=true&w=majority";
-    let allpictures: ParsedUrlQuery[];
     startServer(port);
     connectToDatabase(databaseUrl);
 
@@ -45,10 +43,6 @@ export namespace Zaubercanvas {
             let jsonString: string = JSON.stringify(url.query);
             _response.write(jsonString);
             storeOrder(url.query);
-            allpictures.push(url.query);
-        }
-        for (let item of allpictures) {
-            showOrder(item);
         }
         _response.end();
     }
@@ -56,12 +50,5 @@ export namespace Zaubercanvas {
 
     function storeOrder(_order: any): void {
         orders.insert(_order);
-    }
-    function showOrder(_order: any): void {
-        
-        let select: HTMLSelectElement = <HTMLSelectElement> document.getElementById("Load");
-        let newOption: HTMLOptionElement = document.createElement("option");
-        newOption.text = _order[2];
-        select.add(newOption);
     }
 }

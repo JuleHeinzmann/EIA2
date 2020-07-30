@@ -12,7 +12,6 @@ var Zaubercanvas;
     if (port == undefined)
         port = 5001;
     let databaseUrl = "mongodb+srv://MyMongoDBUser:baumkind@eia2-yxlor.mongodb.net/Endabgabe?retryWrites=true&w=majority";
-    let allpictures;
     startServer(port);
     connectToDatabase(databaseUrl);
     function startServer(_port) {
@@ -40,21 +39,11 @@ var Zaubercanvas;
             let jsonString = JSON.stringify(url.query);
             _response.write(jsonString);
             storeOrder(url.query);
-            allpictures.push(url.query);
-        }
-        for (let item of allpictures) {
-            showOrder(item);
         }
         _response.end();
     }
     function storeOrder(_order) {
         orders.insert(_order);
-    }
-    function showOrder(_order) {
-        let select = document.getElementById("Load");
-        let newOption = document.createElement("option");
-        newOption.text = _order[2];
-        select.add(newOption);
     }
 })(Zaubercanvas = exports.Zaubercanvas || (exports.Zaubercanvas = {}));
 //# sourceMappingURL=Server2.js.map
