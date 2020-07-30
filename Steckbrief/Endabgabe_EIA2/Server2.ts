@@ -26,7 +26,7 @@ export namespace Zaubercanvas {
         options = {useNewUrlParser: true, useUnifiedTopology: true};
         mongoClient = new Mongo.MongoClient(_url, options);
         await mongoClient.connect();
-        orders = mongoClient.db("CocktailBar").collection("Orders");
+        orders = mongoClient.db("Endabgabe").collection("Images");
         console.log("Database connection ", orders != undefined);
     }
 
@@ -44,6 +44,7 @@ export namespace Zaubercanvas {
 
             let jsonString: string = JSON.stringify(url.query);
             _response.write(jsonString);
+            console.log("urlquery:" + url.query);
 
             storeOrder(url.query);
         }
