@@ -41,11 +41,13 @@ export namespace Zaubercanvas {
             let splitURL: string[] = _request.url.split("&");
             if (splitURL[0] == "/?savePicture") {
                 //save new Picture in new Collection 
-                let newCollection: Promise<Mongo.Collection<any>> = mongoClient.db("Pictures").createCollection(splitURL[1]);
-                (await newCollection).insertOne(url.query);
+                //let newCollection: Promise<Mongo.Collection<any>> = mongoClient.db("Endabgabe").createCollection(splitURL[1]);
+                //(await newCollection).insertOne(url.query);
+                (await orders).insertOne(url.query);
                 _response.write("Ist angekommen");
             }
-            let cursor: string = mongoClient.db("Pictures").collections.name;
+
+            let cursor: Mongo.Cursor<any> = await orders.find();
             console.log(cursor);
             // for (let key in url.query) {
             //      _response.write(key + ":" + url.query[key] + "<br/>");
