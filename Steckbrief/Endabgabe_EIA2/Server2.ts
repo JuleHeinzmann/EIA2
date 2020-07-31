@@ -5,7 +5,7 @@ export namespace Zaubercanvas {
     let orders: Mongo.Collection;
     let options: Mongo.MongoClientOptions;
     let mongoClient: Mongo.MongoClient;
-    let allPictures: string[];
+    let allPictures: string[] = [];
     let port: number | string | undefined = process.env.PORT;
     if (port == undefined)
         port = 5001;

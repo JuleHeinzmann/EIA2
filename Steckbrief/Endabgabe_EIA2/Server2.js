@@ -8,7 +8,7 @@ var Zaubercanvas;
     let orders;
     let options;
     let mongoClient;
-    let allPictures;
+    let allPictures = [];
     let port = process.env.PORT;
     if (port == undefined)
         port = 5001;
