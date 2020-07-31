@@ -30,6 +30,7 @@ var Zaubercanvas;
     }
     async function handleRequest(_request, _response) {
         console.log("HEy?");
+        console.log("HEy!!!!!!!!!!!!!");
         _response.setHeader("content-type", "text/html; charset=utf-8");
         _response.setHeader("Access-Control-Allow-Origin", "*");
         if (_request.url) {
@@ -39,6 +40,8 @@ var Zaubercanvas;
             }
             let jsonString = JSON.stringify(url.query);
             _response.write(jsonString);
+            console.log(_response);
+            console.log("hier");
             storeOrder(url.query);
             // let picture: Mongo.Collection<any> = mongoClient.db("Endabgabe").collection("Images");
             // let cursor: Mongo.Cursor<any> = await picture.find();
@@ -52,6 +55,7 @@ var Zaubercanvas;
     }
     function storeOrder(_order) {
         orders.insertOne(_order);
+        console.log("storeOrder geht");
     }
     // function showOrder(_item: object): void {
     //     for (let key in _item) {
