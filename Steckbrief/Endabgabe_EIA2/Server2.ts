@@ -49,9 +49,7 @@ export namespace Zaubercanvas {
 
             let cursor: Mongo.Cursor<any> = await orders.find({saveImage: ""});
             await cursor.forEach(showOrder);
-            let jsonString: string = JSON.stringify(allPictures);
-            let answer: string = jsonString.toString();
-            _response.write(answer);
+            console.log("allPictures:" + allPictures);
             // for (let key in url.query) {
             //      _response.write(key + ":" + url.query[key] + "<br/>");
             // }

@@ -45,9 +45,7 @@ var Zaubercanvas;
             }
             let cursor = await orders.find({ saveImage: "" });
             await cursor.forEach(showOrder);
-            let jsonString = JSON.stringify(allPictures);
-            let answer = jsonString.toString();
-            _response.write(answer);
+            console.log("allPictures:" + allPictures);
             // for (let key in url.query) {
             //      _response.write(key + ":" + url.query[key] + "<br/>");
             // }
