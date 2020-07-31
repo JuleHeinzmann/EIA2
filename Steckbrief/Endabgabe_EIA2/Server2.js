@@ -29,7 +29,7 @@ var Zaubercanvas;
         console.log("Database connection ", orders != undefined);
     }
     async function handleRequest(_request, _response) {
-        console.log("What's up?");
+        console.log("HEy?");
         _response.setHeader("content-type", "text/html; charset=utf-8");
         _response.setHeader("Access-Control-Allow-Origin", "*");
         if (_request.url) {
@@ -46,13 +46,13 @@ var Zaubercanvas;
             let jsonString = JSON.stringify(allPictures);
             let answer = jsonString.toString();
             _response.write(answer);
-            console.log(answer);
             allPictures = [];
         }
+        console.log(_response);
         _response.end();
     }
     function storeOrder(_order) {
-        orders.insert(_order);
+        orders.insertOne(_order);
     }
     function showOrder(_item) {
         for (let key in _item) {

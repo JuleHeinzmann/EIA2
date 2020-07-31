@@ -31,7 +31,7 @@ export namespace Zaubercanvas {
     }
 
     async function handleRequest(_request: Http.IncomingMessage, _response: Http.ServerResponse): Promise<void> {
-        console.log("What's up?");
+        console.log("HEy?");
 
         _response.setHeader("content-type", "text/html; charset=utf-8");
         _response.setHeader("Access-Control-Allow-Origin", "*");
@@ -50,16 +50,16 @@ export namespace Zaubercanvas {
             let jsonString: string = JSON.stringify(allPictures);
             let answer: string = jsonString.toString();
             _response.write(answer);
-            console.log(answer);
             allPictures = [];
 
         }
+        console.log(_response);
         _response.end();
     }
     
 
     function storeOrder(_order: any): void {
-        orders.insert(_order);
+        orders.insertOne(_order);
     }
 
     function showOrder(_item: object): void {
