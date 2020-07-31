@@ -42,8 +42,7 @@ var Zaubercanvas;
                 (await newCollection).insertOne(url.query);
                 _response.write("Ist angekommen");
             }
-            let pictures = mongoClient.db("Pictures");
-            let cursor = await pictures.listCollections();
+            let cursor = mongoClient.db("Pictures").collections.name;
             console.log(cursor);
             // for (let key in url.query) {
             //      _response.write(key + ":" + url.query[key] + "<br/>");
