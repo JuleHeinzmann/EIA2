@@ -38,18 +38,23 @@ export namespace Zaubercanvas {
 
         if (_request.url) {
             let url: Url.UrlWithParsedQuery = Url.parse(_request.url, true);
-            for (let key in url.query) {
-                 _response.write(key + ":" + url.query[key] + "<br/>");
+            let splitURL: string[] = _request.url.split("&");
+            if (splitURL[0] == "/?savePicture") {
+                //save new Picture in new Collection 
+                let newCollection: Promise<Mongo.Collection<any>> = mongoClient.db("Pictures").createCollection(splitURL[1]);
+                (await newCollection).insertOne(url.query);
+                _response.write("Ist angekommen");
             }
-            let jsonString: string = JSON.stringify(url.query);
-            _response.write(jsonString);
-            console.log("hier");
-            storeOrder(url.query);
+            // for (let key in url.query) {
+            //      _response.write(key + ":" + url.query[key] + "<br/>");
+            // }
+            // let jsonString: string = JSON.stringify(url.query);
+            // _response.write(jsonString);
+            // console.log("hier");
+            // storeOrder(url.query);
             // let picture: Mongo.Collection<any> = mongoClient.db("Endabgabe").collection("Images");
-            let cursor: Mongo.Cursor<any> = await orders.find({});
-            console.log(cursor);
-            let data = mongoClient.db("Endabgabe").listCollections();
-            console.log(data);
+            // let cursor: Mongo.Cursor<any> = await orders.find({});
+            // console.log(cursor);
             //await cursor.forEach(showOrder);
             // let jsonString: string = JSON.stringify(allPictures);
             // let answer: string = jsonString.toString();
@@ -61,10 +66,10 @@ export namespace Zaubercanvas {
     }
     
 
-    function storeOrder(_order: any): void {
-        orders.insertOne(_order);
-        console.log("storeOrder geht");
-    }
+    // function storeOrder(_order: any): void {
+    //     orders.insertOne(_order);
+    //     console.log("storeOrder geht");
+    // }
 
     // function showOrder(_item: object): void {
     //     console.log("showorder geht");
