@@ -45,6 +45,10 @@ export namespace Zaubercanvas {
                 (await newCollection).insertOne(url.query);
                 _response.write("Ist angekommen");
             }
+            let pictures: Mongo.Collection<any> = mongoClient.db("Pictures").collection(splitURL[1]);
+            let cursor: Mongo.Cursor<any> = await pictures.find();
+            console.log(cursor);
+
             // for (let key in url.query) {
             //      _response.write(key + ":" + url.query[key] + "<br/>");
             // }
