@@ -47,8 +47,8 @@ export namespace Zaubercanvas {
                 _response.write("Ist angekommen");
             }
 
-            let cursor: Mongo.Cursor<any> = await orders.find();
-            console.log(cursor);
+            let cursor: Mongo.Cursor<any> = await orders.find({saveImage: ""});
+            await cursor.forEach(showOrder);
             // for (let key in url.query) {
             //      _response.write(key + ":" + url.query[key] + "<br/>");
             // }
@@ -75,11 +75,11 @@ export namespace Zaubercanvas {
     //     console.log("storeOrder geht");
     // }
 
-    // function showOrder(_item: object): void {
-    //     console.log("showorder geht");
-    //     for (let key in _item) {
-    //         allPictures.push(key);
-    //         console.log("allpictures" + allPictures);
-    //     }
-    // }
+    function showOrder(_item: object): void {
+        console.log("showorder geht");
+        for (let key in _item) {
+            allPictures.push(key);
+            console.log("allpictures" + allPictures);
+        }
+    }
 }
