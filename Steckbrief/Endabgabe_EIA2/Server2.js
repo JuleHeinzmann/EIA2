@@ -8,7 +8,7 @@ var Zaubercanvas;
     let orders;
     let options;
     let mongoClient;
-    let allPictures;
+    //let allPictures: string[];
     let port = process.env.PORT;
     if (port == undefined)
         port = 5001;
@@ -34,30 +34,29 @@ var Zaubercanvas;
         _response.setHeader("Access-Control-Allow-Origin", "*");
         if (_request.url) {
             let url = Url.parse(_request.url, true);
-            // for (let key in url.query) {
-            //      _response.write(key + ":" + url.query[key] + "<br/>");
-            // }
-            // let jsonString: string = JSON.stringify(url.query);
-            //_response.write(jsonString);
+            for (let key in url.query) {
+                _response.write(key + ":" + url.query[key] + "<br/>");
+            }
+            let jsonString = JSON.stringify(url.query);
+            _response.write(jsonString);
             storeOrder(url.query);
-            let picture = mongoClient.db("Endabgabe").collection("Images");
-            let cursor = await picture.find();
-            await cursor.forEach(showOrder);
-            let jsonString = JSON.stringify(allPictures);
-            let answer = jsonString.toString();
-            _response.write(answer);
-            allPictures = [];
+            // let picture: Mongo.Collection<any> = mongoClient.db("Endabgabe").collection("Images");
+            // let cursor: Mongo.Cursor<any> = await picture.find();
+            // await cursor.forEach(showOrder);
+            // let jsonString: string = JSON.stringify(allPictures);
+            // let answer: string = jsonString.toString();
+            // _response.write(answer);
+            //allPictures = [];
         }
-        console.log(_response);
         _response.end();
     }
     function storeOrder(_order) {
         orders.insertOne(_order);
     }
-    function showOrder(_item) {
-        for (let key in _item) {
-            allPictures.push(key);
-        }
-    }
+    // function showOrder(_item: object): void {
+    //     for (let key in _item) {
+    //         allPictures.push(key);
+    //     }
+    // }
 })(Zaubercanvas = exports.Zaubercanvas || (exports.Zaubercanvas = {}));
 //# sourceMappingURL=Server2.js.map
