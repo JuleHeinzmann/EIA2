@@ -46,8 +46,10 @@ export namespace Zaubercanvas {
             console.log("hier");
             storeOrder(url.query);
             // let picture: Mongo.Collection<any> = mongoClient.db("Endabgabe").collection("Images");
-            let cursor: Mongo.Cursor<any> = await orders.find();
+            let cursor: Mongo.Cursor<any> = await orders.find({});
             console.log(cursor);
+            let data = mongoClient.db("Endabgabe").listCollections();
+            console.log(data);
             //await cursor.forEach(showOrder);
             // let jsonString: string = JSON.stringify(allPictures);
             // let answer: string = jsonString.toString();
