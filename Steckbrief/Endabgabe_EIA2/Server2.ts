@@ -5,7 +5,7 @@ export namespace Zaubercanvas {
     let orders: Mongo.Collection;
     let options: Mongo.MongoClientOptions;
     let mongoClient: Mongo.MongoClient;
-    //let allPictures: string[];
+    let allPictures: string[];
     let port: number | string | undefined = process.env.PORT;
     if (port == undefined)
         port = 5001;
@@ -43,16 +43,15 @@ export namespace Zaubercanvas {
             }
             let jsonString: string = JSON.stringify(url.query);
             _response.write(jsonString);
-            console.log(_response);
             console.log("hier");
             storeOrder(url.query);
             // let picture: Mongo.Collection<any> = mongoClient.db("Endabgabe").collection("Images");
-            // let cursor: Mongo.Cursor<any> = await picture.find();
-            // await cursor.forEach(showOrder);
+            let cursor: Mongo.Cursor<any> = await orders.find();
+            await cursor.forEach(showOrder);
             // let jsonString: string = JSON.stringify(allPictures);
             // let answer: string = jsonString.toString();
             // _response.write(answer);
-            //allPictures = [];
+            allPictures = [];
 
         }
         _response.end();
@@ -64,9 +63,11 @@ export namespace Zaubercanvas {
         console.log("storeOrder geht");
     }
 
-    // function showOrder(_item: object): void {
-    //     for (let key in _item) {
-    //         allPictures.push(key);
-    //     }
-    // }
+    function showOrder(_item: object): void {
+        console.log("showorder geht");
+        for (let key in _item) {
+            allPictures.push(key);
+            console.log("allpictures" + allPictures);
+        }
+    }
 }

@@ -8,7 +8,7 @@ var Zaubercanvas;
     let orders;
     let options;
     let mongoClient;
-    //let allPictures: string[];
+    let allPictures;
     let port = process.env.PORT;
     if (port == undefined)
         port = 5001;
@@ -40,16 +40,15 @@ var Zaubercanvas;
             }
             let jsonString = JSON.stringify(url.query);
             _response.write(jsonString);
-            console.log(_response);
             console.log("hier");
             storeOrder(url.query);
             // let picture: Mongo.Collection<any> = mongoClient.db("Endabgabe").collection("Images");
-            // let cursor: Mongo.Cursor<any> = await picture.find();
-            // await cursor.forEach(showOrder);
+            let cursor = await orders.find();
+            await cursor.forEach(showOrder);
             // let jsonString: string = JSON.stringify(allPictures);
             // let answer: string = jsonString.toString();
             // _response.write(answer);
-            //allPictures = [];
+            allPictures = [];
         }
         _response.end();
     }
@@ -57,10 +56,12 @@ var Zaubercanvas;
         orders.insertOne(_order);
         console.log("storeOrder geht");
     }
-    // function showOrder(_item: object): void {
-    //     for (let key in _item) {
-    //         allPictures.push(key);
-    //     }
-    // }
+    function showOrder(_item) {
+        console.log("showorder geht");
+        for (let key in _item) {
+            allPictures.push(key);
+            console.log("allpictures" + allPictures);
+        }
+    }
 })(Zaubercanvas = exports.Zaubercanvas || (exports.Zaubercanvas = {}));
 //# sourceMappingURL=Server2.js.map
