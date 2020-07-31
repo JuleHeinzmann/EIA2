@@ -44,12 +44,9 @@ export namespace Zaubercanvas {
                 //let newCollection: Promise<Mongo.Collection<any>> = mongoClient.db("Endabgabe").createCollection(splitURL[1]);
                 //(await newCollection).insertOne(url.query);
                 (await orders).insertOne(url.query);
-                _response.write("Ist angekommen");
+                //_response.write("Ist angekommen");
             }
 
-            let cursor: Mongo.Cursor<any> = await orders.find({saveImage: ""});
-            await cursor.forEach(showOrder);
-            console.log("allPictures:" + allPictures);
             // for (let key in url.query) {
             //      _response.write(key + ":" + url.query[key] + "<br/>");
             // }
@@ -57,13 +54,12 @@ export namespace Zaubercanvas {
             // _response.write(jsonString);
             // console.log("hier");
             // storeOrder(url.query);
-            // let picture: Mongo.Collection<any> = mongoClient.db("Endabgabe").collection("Images");
-            // let cursor: Mongo.Cursor<any> = await orders.find({});
-            // console.log(cursor);
-            //await cursor.forEach(showOrder);
-            // let jsonString: string = JSON.stringify(allPictures);
-            // let answer: string = jsonString.toString();
-            // _response.write(answer);
+            //let picture: Mongo.Collection<any> = mongoClient.db("Endabgabe").collection("Images");
+            let cursor: Mongo.Cursor<any> = await orders.find();
+            await cursor.forEach(showOrder);
+            let jsonString: string = JSON.stringify(allPictures);
+            let answer: string = jsonString.toString();
+            _response.write(answer);
             allPictures = [];
 
         }
