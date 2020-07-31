@@ -30,7 +30,6 @@ var Zaubercanvas;
         let canvasQuery = new URLSearchParams(canvasLook);
         let query = new URLSearchParams(info);
         let response = await fetch(url + "?savePicture&" + name + "&" + canvasQuery.toString() + "&" + query.toString());
-        //let response: Response = await fetch(url + ",Name: " + name + ",Canvas: " + canvasQuery.toString() + ",Figures: " + query.toString());
         //await fetch(url + "?insertName&" + name);
         let responseText = await response.text();
         if (responseText != "") {
@@ -40,7 +39,12 @@ var Zaubercanvas;
             alert("An error has occurred during saving");
         }
         console.log(responseText);
+        findPictures(responseText);
     }
+    async function findPictures(_response) {
+        console.log(_response);
+    }
+    Zaubercanvas.findPictures = findPictures;
     async function loadPicture() {
         let name = Zaubercanvas.savedpicture.value;
         let response = await fetch(url + "?" + "findPicture&" + name);

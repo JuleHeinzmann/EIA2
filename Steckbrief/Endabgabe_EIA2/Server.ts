@@ -33,7 +33,6 @@ namespace Zaubercanvas {
         let canvasQuery: URLSearchParams = new URLSearchParams(canvasLook);
         let query: URLSearchParams = new URLSearchParams(info);
         let response: Response = await fetch(url + "?savePicture&" + name + "&" + canvasQuery.toString() + "&" + query.toString());
-        //let response: Response = await fetch(url + ",Name: " + name + ",Canvas: " + canvasQuery.toString() + ",Figures: " + query.toString());
         //await fetch(url + "?insertName&" + name);
 
         let responseText: string = await response.text();
@@ -44,8 +43,11 @@ namespace Zaubercanvas {
             alert("An error has occurred during saving");
         }
         console.log(responseText);
+        findPictures(responseText);
     }
-
+    export async function findPictures(_response: string): Promise<void> {
+        console.log(_response);
+    }
     export async function loadPicture(): Promise<void> {
         let name: string = savedpicture.value;
         let response: Response = await fetch(url + "?" + "findPicture&" + name);
