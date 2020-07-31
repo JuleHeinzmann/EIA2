@@ -44,7 +44,8 @@ var Zaubercanvas;
             storeOrder(url.query);
             // let picture: Mongo.Collection<any> = mongoClient.db("Endabgabe").collection("Images");
             let cursor = await orders.find();
-            await cursor.forEach(showOrder);
+            console.log(cursor);
+            //await cursor.forEach(showOrder);
             // let jsonString: string = JSON.stringify(allPictures);
             // let answer: string = jsonString.toString();
             // _response.write(answer);
@@ -56,12 +57,12 @@ var Zaubercanvas;
         orders.insertOne(_order);
         console.log("storeOrder geht");
     }
-    function showOrder(_item) {
-        console.log("showorder geht");
-        for (let key in _item) {
-            allPictures.push(key);
-            console.log("allpictures" + allPictures);
-        }
-    }
+    // function showOrder(_item: object): void {
+    //     console.log("showorder geht");
+    //     for (let key in _item) {
+    //         allPictures.push(key);
+    //         console.log("allpictures" + allPictures);
+    //     }
+    // }
 })(Zaubercanvas = exports.Zaubercanvas || (exports.Zaubercanvas = {}));
 //# sourceMappingURL=Server2.js.map
