@@ -7,6 +7,7 @@ namespace Zaubercanvas {
         type: string;
     }
     export function insertPicture(_name: string): void {
+        //Für jede Figur in moveables wird die x- und y-Position und der Typ der Figur in information gepusht
         let information: Picture[] = [];
         for (let figure of moveables) {
             let form: Picture = {
@@ -18,7 +19,7 @@ namespace Zaubercanvas {
         }
         sendData(information, _name);
     }
-
+    //teilweise bei Alida Kohler geschaut
     async function sendData(_information: Picture[], _name: string): Promise<void> {
         let name: string = _name.replace(" ", "_");
         let canvasInfo: string[] = [];
@@ -27,34 +28,34 @@ namespace Zaubercanvas {
         let backgroundinfo: string = background.value;
         let canvasinfo: string = canvassize.value;
         canvasInfo.push(canvasinfo, backgroundinfo);
-        let canvasLook: string = JSON.stringify(canvasInfo);
-        console.log(canvasLook);
-        let info: string = JSON.stringify(_information);
-        console.log(info);
+        let canvasLook: string = JSON.stringify(canvasInfo); //macht JSON string aus Infos zur Canvasgröße und Hintergrundfarbe
+        //console.log(canvasLook);
+        let info: string = JSON.stringify(_information); //macht JSON string aus infos zu den Figuren
+        //console.log(info);
         let canvasQuery: URLSearchParams = new URLSearchParams(canvasLook);
         let query: URLSearchParams = new URLSearchParams(info);
         let response: Response = await fetch(url + "?savePicture&" + name + "&" + canvasQuery.toString() + "&" + query.toString());
-        //await fetch(url + "?insertName&" + name);
 
         let responseText: string = await response.text();
         if (responseText != "") {
-            alert("Your picture " + _name + " has been saved!");
+            alert("Dein Bild " + _name + "wurde gespeichert");
         }
         else {
-            alert("An error has occurred during saving");
+            alert("Es gab einen Fehler beim Speichern des Bildes.");
         }
         console.log(responseText);
     }
     export async function findPictures(): Promise<void> {
+        //fügt die Namen der schon gespeicherten Bilder dem select Element hinzu
         //let response: Response = await fetch(url + "?savePicture&" );
         let response: Response = await fetch(url);
         let responseText: string = await response.text();
         let pretty: string = responseText.replace(/\\|\[|"|_id|{|}|insertName|]/g, "");
         let prettier: string = pretty.replace(",,", ",");
         pictures = prettier.split(",savePicture,");
-        console.log(pictures);
+        //console.log(pictures);
         for (let item of pictures) {
-            console.log(item);
+            //console.log(item);
             if (item != "" && item != ",savePicture") {
             let information: string[] = item.split(",");
             let name: string = information[0];
@@ -67,55 +68,52 @@ namespace Zaubercanvas {
         }
     }
     export function loadPicture(): void {
-        console.log("hier");
+        //console.log(pictures);
+        //lädt ein vorher gespeicheretes Bild
         let wanted: HTMLSelectElement = <HTMLSelectElement> document.getElementById("Load");
-        moveables = [];
+        moveables = []; 
         let canvas: CanvasRenderingContext2D = <CanvasRenderingContext2D>maincanvas.getContext("2d");
-        canvas.clearRect(0, 0, maincanvas.width, maincanvas.height);
+        canvas.clearRect(0, 0, maincanvas.width, maincanvas.height); //vorher plazierte Figuren sollen weg, wenn man ein Bild lädt
         for (let item of pictures) {
             let information: string[] = item.split(",");
             if (information[0] == wanted.value) {
-                let picturedata: string[] = item.split(",");
-                console.log(picturedata);
                 let canvasinfo: HTMLSelectElement = <HTMLSelectElement> document.getElementById("choosecanvas");
-                canvasinfo.value = picturedata[1];
+                canvasinfo.value = information[1]; //Größe des Canvas
                 handleChange();
                 let backgroundinfo: HTMLSelectElement = <HTMLSelectElement> document.getElementById("Background");
-                backgroundinfo.value = picturedata[2];
+                backgroundinfo.value = information[2]; //Hintergrundfarbe des Canvas
                 selectBackground();
-                picturedata.splice(0, 3);
-                console.log(picturedata);
-                for (let i: number = 0; i < picturedata.length; i++) {
+                information.splice(0, 3);
+                for (let i: number = 0; i < information.length; i++) {
                     let canvas: CanvasRenderingContext2D = <CanvasRenderingContext2D>maincanvas.getContext("2d");
-                    if (picturedata[i] == "type:Star") {
-                       let positionY: string = (picturedata[i - 1].replace("positionY:", "")); 
-                       let positionX: string = (picturedata[i - 2].replace("positionX:", "")); 
+                    if (information[i] == "type:Star") {
+                       let positionY: string = (information[i - 1].replace("positionY:", "")); 
+                       let positionX: string = (information[i - 2].replace("positionX:", "")); 
                        let position: Vector = new Vector(parseInt(positionX), parseInt(positionY));
                        let star: Star = new Star(position);
                        star.draw(canvas);
                        moveables.push(star);
                     }
-                    if (picturedata[i] == "type:Circle") {
-                        let positionY: string = (picturedata[i - 1].replace("positionY:", "")); 
-                        let positionX: string = (picturedata[i - 2].replace("positionX:", "")); 
+                    if (information[i] == "type:Circle") {
+                        let positionY: string = (information[i - 1].replace("positionY:", "")); 
+                        let positionX: string = (information[i - 2].replace("positionX:", "")); 
                         let position: Vector = new Vector(parseInt(positionX), parseInt(positionY));
                         let circle: Circle = new Circle(position);
                         circle.draw(canvas);
                         moveables.push(circle);
                     }
-                    if (picturedata[i] == "type:Triangle") {
+                    if (information[i] == "type:Triangle") {
                         console.log(i);
-                        let positionY: string = (picturedata[i - 1].replace("positionY:", "")); 
-                        let positionX: string = (picturedata[i - 2].replace("positionX:", "")); 
+                        let positionY: string = (information[i - 1].replace("positionY:", "")); 
+                        let positionX: string = (information[i - 2].replace("positionX:", "")); 
                         let position: Vector = new Vector(parseInt(positionX), parseInt(positionY));
                         let triangle: Triangle = new Triangle(position);
-                        console.log(position);
                         triangle.draw(canvas);
                         moveables.push(triangle);
                     }
-                    if (picturedata[i] == "type:Square") {
-                        let positionY: string = (picturedata[i - 1].replace("positionY:", "")); 
-                        let positionX: string = (picturedata[i - 2].replace("positionX:", "")); 
+                    if (information[i] == "type:Square") {
+                        let positionY: string = (information[i - 1].replace("positionY:", "")); 
+                        let positionX: string = (information[i - 2].replace("positionX:", "")); 
                         let position: Vector = new Vector(parseInt(positionX), parseInt(positionY));
                         let square: Square = new Square(position);
                         square.draw(canvas);

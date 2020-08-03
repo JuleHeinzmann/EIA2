@@ -7,6 +7,7 @@ namespace Zaubercanvas {
     export let maincanvas: HTMLCanvasElement;
     export let savedpicture: HTMLInputElement;
     function handleLoad(): void {
+        //Installiert Eventlistener
         drawforms();
         findPictures();
         document.getElementById("choosecanvas")?.addEventListener("change", handleChange);
@@ -25,6 +26,7 @@ namespace Zaubercanvas {
         window.setInterval(update, 20);
     }
     function drawforms(): void {
+        //Zeichnet die 4 Figuren, die man auswählen kann in die Canvases auf der rechten Seite
         let canvastriangle: HTMLCanvasElement = <HTMLCanvasElement> document.getElementById("triangle");
         let positionsquare: Vector = new Vector(30, 30);
         let positioncircle: Vector = new Vector(50, 50);
@@ -47,8 +49,7 @@ namespace Zaubercanvas {
     }
 
     export function handleChange(): void {
-        //let maincanvas: HTMLCanvasElement = <HTMLCanvasElement> document.getElementById("maincanvas");
-        //let target: HTMLSelectElement = <HTMLSelectElement> event?.target;
+        //Wenn man bei dem Select-Element eine Größe auswählt, wird die Größe des maincanvas entsprechend geändert
         let target: HTMLSelectElement = <HTMLSelectElement> document.getElementById("choosecanvas");
         if (target.value == "Klein") {
             maincanvas.height = 200;
@@ -65,8 +66,7 @@ namespace Zaubercanvas {
         
     }
     export function selectBackground(): void {
-        //let maincanvas: HTMLCanvasElement = <HTMLCanvasElement> document.getElementById("maincanvas");
-        //let target: HTMLSelectElement = <HTMLSelectElement> event?.target;
+        //Wenn eine Hintergrundfarbe ausgewählt wird, wird das canvas in dieser Farbe gefüllt
         let target: HTMLSelectElement = <HTMLSelectElement> document.getElementById("Background");
         let canvas: CanvasRenderingContext2D = <CanvasRenderingContext2D>maincanvas.getContext("2d");
         if (target.value == "blue") {
@@ -88,18 +88,20 @@ namespace Zaubercanvas {
         backgroundImage = canvas.getImageData(0, 0, maincanvas.width, maincanvas.height);
     }
     function chooseform(): void {
+        //Wenn ein Symbol auf der rechten Seite angeklickt wird, wird die id chosenform zugewiesen
         let target: HTMLCanvasElement = <HTMLCanvasElement> event?.target;
         chosenform = target.id;
     }
     function placefrom(_event: MouseEvent): void {
+        //falls man grade nicht in dem Löschenmodus ist, wird bei einem Klick auf den maincanvas das gewählte Element plaziert
         if (trash == false) {
             //let maincanvas: HTMLCanvasElement = <HTMLCanvasElement> document.getElementById("maincanvas");
             let canvas: CanvasRenderingContext2D = <CanvasRenderingContext2D>maincanvas.getContext("2d");
             let x: number = _event.offsetX;
             let y: number = _event.offsetY;
             let position: Vector = new Vector(x, y);
-            console.log(position);
-            console.log(canvas);
+            // console.log(position);
+            // console.log(canvas);
             if (chosenform == "circle") {
                 let circle: Circle = new Circle(position);
                 circle.draw(canvas);
@@ -123,6 +125,7 @@ namespace Zaubercanvas {
         }
     }
     function update(): void {
+        //Der Canvas wird alle 20 ms geupdated um die Figuren zu animieren
         //let maincanvas: HTMLCanvasElement = <HTMLCanvasElement> document.getElementById("maincanvas");
         let canvas: CanvasRenderingContext2D = <CanvasRenderingContext2D>maincanvas.getContext("2d");
         if (backgroundImage) {
@@ -148,6 +151,8 @@ namespace Zaubercanvas {
     }
     //ähnlich wie Luzia Gunzenhauser
     function deleteform (_event: MouseEvent, _trash: boolean): void {
+        //Wenn trash true ist, kann man eine Figur löschen, wenn man auf sie klickt. Es wird geschaut, ob die Position einer Figur 
+        //aus moveables ähnlich der geklickten Position auf dem Canvas ist
         console.log(trash);
         if ( trash == true) {
             let poisitonx: number = _event.clientX;
@@ -170,12 +175,14 @@ namespace Zaubercanvas {
 
     }
     function deletemode(_event: KeyboardEvent): void {
+        //Wenn man "d" drückt wird trash true und man kann eine figur löschen
         if (_event.key == "d") {
             trash = true;
         }
     }
     function getName(): void {
-        let pictuteName: string = <string> prompt("Geb name ein");
-        insertPicture(pictuteName);
+        //Wenn auf den Save Button gedrückt wird, wird der Nutzer aufgefordert einen Namen einzugeben
+        let pictureName: string = <string> prompt("Gib einen Namen ein:");
+        insertPicture(pictureName);
     }
 }

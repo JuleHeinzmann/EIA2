@@ -7,6 +7,7 @@ var Zaubercanvas;
     let backgroundImage;
     let trash = false;
     function handleLoad() {
+        //Installiert Eventlistener
         drawforms();
         Zaubercanvas.findPictures();
         document.getElementById("choosecanvas")?.addEventListener("change", handleChange);
@@ -25,6 +26,7 @@ var Zaubercanvas;
         window.setInterval(update, 20);
     }
     function drawforms() {
+        //Zeichnet die 4 Figuren, die man auswählen kann in die Canvases auf der rechten Seite
         let canvastriangle = document.getElementById("triangle");
         let positionsquare = new Zaubercanvas.Vector(30, 30);
         let positioncircle = new Zaubercanvas.Vector(50, 50);
@@ -46,8 +48,7 @@ var Zaubercanvas;
         star.draw(crc4);
     }
     function handleChange() {
-        //let maincanvas: HTMLCanvasElement = <HTMLCanvasElement> document.getElementById("maincanvas");
-        //let target: HTMLSelectElement = <HTMLSelectElement> event?.target;
+        //Wenn man bei dem Select-Element eine Größe auswählt, wird die Größe des maincanvas entsprechend geändert
         let target = document.getElementById("choosecanvas");
         if (target.value == "Klein") {
             Zaubercanvas.maincanvas.height = 200;
@@ -64,8 +65,7 @@ var Zaubercanvas;
     }
     Zaubercanvas.handleChange = handleChange;
     function selectBackground() {
-        //let maincanvas: HTMLCanvasElement = <HTMLCanvasElement> document.getElementById("maincanvas");
-        //let target: HTMLSelectElement = <HTMLSelectElement> event?.target;
+        //Wenn eine Hintergrundfarbe ausgewählt wird, wird das canvas in dieser Farbe gefüllt
         let target = document.getElementById("Background");
         let canvas = Zaubercanvas.maincanvas.getContext("2d");
         if (target.value == "blue") {
@@ -88,18 +88,20 @@ var Zaubercanvas;
     }
     Zaubercanvas.selectBackground = selectBackground;
     function chooseform() {
+        //Wenn ein Symbol auf der rechten Seite angeklickt wird, wird die id chosenform zugewiesen
         let target = event?.target;
         chosenform = target.id;
     }
     function placefrom(_event) {
+        //falls man grade nicht in dem Löschenmodus ist, wird bei einem Klick auf den maincanvas das gewählte Element plaziert
         if (trash == false) {
             //let maincanvas: HTMLCanvasElement = <HTMLCanvasElement> document.getElementById("maincanvas");
             let canvas = Zaubercanvas.maincanvas.getContext("2d");
             let x = _event.offsetX;
             let y = _event.offsetY;
             let position = new Zaubercanvas.Vector(x, y);
-            console.log(position);
-            console.log(canvas);
+            // console.log(position);
+            // console.log(canvas);
             if (chosenform == "circle") {
                 let circle = new Zaubercanvas.Circle(position);
                 circle.draw(canvas);
@@ -123,6 +125,7 @@ var Zaubercanvas;
         }
     }
     function update() {
+        //Der Canvas wird alle 20 ms geupdated um die Figuren zu animieren
         //let maincanvas: HTMLCanvasElement = <HTMLCanvasElement> document.getElementById("maincanvas");
         let canvas = Zaubercanvas.maincanvas.getContext("2d");
         if (backgroundImage) {
@@ -146,6 +149,8 @@ var Zaubercanvas;
     }
     //ähnlich wie Luzia Gunzenhauser
     function deleteform(_event, _trash) {
+        //Wenn trash true ist, kann man eine Figur löschen, wenn man auf sie klickt. Es wird geschaut, ob die Position einer Figur 
+        //aus moveables ähnlich der geklickten Position auf dem Canvas ist
         console.log(trash);
         if (trash == true) {
             let poisitonx = _event.clientX;
@@ -167,13 +172,15 @@ var Zaubercanvas;
         }
     }
     function deletemode(_event) {
+        //Wenn man "d" drückt wird trash true und man kann eine figur löschen
         if (_event.key == "d") {
             trash = true;
         }
     }
     function getName() {
-        let pictuteName = prompt("Geb name ein");
-        Zaubercanvas.insertPicture(pictuteName);
+        //Wenn auf den Save Button gedrückt wird, wird der Nutzer aufgefordert einen Namen einzugeben
+        let pictureName = prompt("Gib einen Namen ein:");
+        Zaubercanvas.insertPicture(pictureName);
     }
 })(Zaubercanvas || (Zaubercanvas = {}));
 //# sourceMappingURL=zaubercanvas.js.map
