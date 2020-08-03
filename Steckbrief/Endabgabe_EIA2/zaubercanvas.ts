@@ -169,4 +169,13 @@ namespace Zaubercanvas {
         }
 
     }
-    function deletemode(_eve
+    function deletemode(_event: KeyboardEvent): void {
+        if (_event.key == "d") {
+            trash = true;
+        }
+    }
+    function getName(): void {
+        let pictuteName: string = <string> prompt("Geb name ein");
+        insertPicture(pictuteName);
+    }
+}

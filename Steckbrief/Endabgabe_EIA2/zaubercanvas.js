@@ -157,4 +157,23 @@ var Zaubercanvas;
             for (let item of Zaubercanvas.moveables) {
                 if (item.position.x - 25 < offsetX &&
                     item.position.x + 25 > offsetX &&
-                    item.position.y - 25 < offsetY
+                    item.position.y - 25 < offsetY &&
+                    item.position.y + 25 > offsetY) {
+                    let index = Zaubercanvas.moveables.indexOf(item);
+                    Zaubercanvas.moveables.splice(index, 1);
+                    trash = false;
+                }
+            }
+        }
+    }
+    function deletemode(_event) {
+        if (_event.key == "d") {
+            trash = true;
+        }
+    }
+    function getName() {
+        let pictuteName = prompt("Geb name ein");
+        Zaubercanvas.insertPicture(pictuteName);
+    }
+})(Zaubercanvas || (Zaubercanvas = {}));
+//# sourceMappingURL=zaubercanvas.js.map
