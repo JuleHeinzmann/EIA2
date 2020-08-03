@@ -6,17 +6,17 @@ var Zaubercanvas;
     Zaubercanvas.moveables = [];
     let backgroundImage;
     let trash = false;
-    let maincanvas;
     function handleLoad() {
         drawforms();
+        Zaubercanvas.findPictures();
         document.getElementById("choosecanvas")?.addEventListener("change", handleChange);
         document.getElementById("Background")?.addEventListener("change", selectBackground);
         document.getElementById("triangle")?.addEventListener("click", chooseform);
         document.getElementById("circle")?.addEventListener("click", chooseform);
         document.getElementById("star")?.addEventListener("click", chooseform);
         document.getElementById("square")?.addEventListener("click", chooseform);
-        maincanvas = document.getElementById("maincanvas");
-        maincanvas.addEventListener("click", function () { placefrom(event); });
+        Zaubercanvas.maincanvas = document.getElementById("maincanvas");
+        Zaubercanvas.maincanvas.addEventListener("click", function () { placefrom(event); });
         document.getElementById("maincanvas")?.addEventListener("click", function () { deleteform(event, trash); });
         document.addEventListener("keydown", function () { deletemode(event); });
         document.getElementById("save")?.addEventListener("click", getName);
@@ -47,42 +47,46 @@ var Zaubercanvas;
     }
     function handleChange() {
         //let maincanvas: HTMLCanvasElement = <HTMLCanvasElement> document.getElementById("maincanvas");
-        let target = event?.target;
+        //let target: HTMLSelectElement = <HTMLSelectElement> event?.target;
+        let target = document.getElementById("choosecanvas");
         if (target.value == "Klein") {
-            maincanvas.height = 200;
-            maincanvas.width = 400;
+            Zaubercanvas.maincanvas.height = 200;
+            Zaubercanvas.maincanvas.width = 400;
         }
         if (target.value == "Mittel") {
-            maincanvas.height = 350;
-            maincanvas.width = 600;
+            Zaubercanvas.maincanvas.height = 350;
+            Zaubercanvas.maincanvas.width = 600;
         }
         if (target.value == "Groß") {
-            maincanvas.height = 550;
-            maincanvas.width = 1000;
+            Zaubercanvas.maincanvas.height = 550;
+            Zaubercanvas.maincanvas.width = 1000;
         }
     }
+    Zaubercanvas.handleChange = handleChange;
     function selectBackground() {
         //let maincanvas: HTMLCanvasElement = <HTMLCanvasElement> document.getElementById("maincanvas");
-        let target = event?.target;
-        let canvas = maincanvas.getContext("2d");
+        //let target: HTMLSelectElement = <HTMLSelectElement> event?.target;
+        let target = document.getElementById("Background");
+        let canvas = Zaubercanvas.maincanvas.getContext("2d");
         if (target.value == "blue") {
             canvas.fillStyle = "#AEEEEE";
-            canvas.fillRect(0, 0, maincanvas.width, maincanvas.height);
+            canvas.fillRect(0, 0, Zaubercanvas.maincanvas.width, Zaubercanvas.maincanvas.height);
         }
         if (target.value == "yellow") {
             canvas.fillStyle = "#FFFACD";
-            canvas.fillRect(0, 0, maincanvas.width, maincanvas.height);
+            canvas.fillRect(0, 0, Zaubercanvas.maincanvas.width, Zaubercanvas.maincanvas.height);
         }
         if (target.value == "grey") {
             canvas.fillStyle = "#D0D0D0";
-            canvas.fillRect(0, 0, maincanvas.width, maincanvas.height);
+            canvas.fillRect(0, 0, Zaubercanvas.maincanvas.width, Zaubercanvas.maincanvas.height);
         }
         if (target.value == "beige") {
             canvas.fillStyle = "#EFEBDC";
-            canvas.fillRect(0, 0, maincanvas.width, maincanvas.height);
+            canvas.fillRect(0, 0, Zaubercanvas.maincanvas.width, Zaubercanvas.maincanvas.height);
         }
-        backgroundImage = canvas.getImageData(0, 0, maincanvas.width, maincanvas.height);
+        backgroundImage = canvas.getImageData(0, 0, Zaubercanvas.maincanvas.width, Zaubercanvas.maincanvas.height);
     }
+    Zaubercanvas.selectBackground = selectBackground;
     function chooseform() {
         let target = event?.target;
         chosenform = target.id;
@@ -90,7 +94,7 @@ var Zaubercanvas;
     function placefrom(_event) {
         if (trash == false) {
             //let maincanvas: HTMLCanvasElement = <HTMLCanvasElement> document.getElementById("maincanvas");
-            let canvas = maincanvas.getContext("2d");
+            let canvas = Zaubercanvas.maincanvas.getContext("2d");
             let x = _event.offsetX;
             let y = _event.offsetY;
             let position = new Zaubercanvas.Vector(x, y);
@@ -120,7 +124,7 @@ var Zaubercanvas;
     }
     function update() {
         //let maincanvas: HTMLCanvasElement = <HTMLCanvasElement> document.getElementById("maincanvas");
-        let canvas = maincanvas.getContext("2d");
+        let canvas = Zaubercanvas.maincanvas.getContext("2d");
         if (backgroundImage) {
             canvas.putImageData(backgroundImage, 0, 0);
         }
@@ -147,29 +151,10 @@ var Zaubercanvas;
             let poisitonx = _event.clientX;
             let positiony = _event.clientY;
             //let maincanvas: HTMLCanvasElement = <HTMLCanvasElement> document.getElementById("maincanvas");
-            let canvasRect = maincanvas.getBoundingClientRect();
+            let canvasRect = Zaubercanvas.maincanvas.getBoundingClientRect();
             let offsetX = poisitonx - canvasRect.left;
             let offsetY = positiony - canvasRect.top;
             for (let item of Zaubercanvas.moveables) {
                 if (item.position.x - 25 < offsetX &&
                     item.position.x + 25 > offsetX &&
-                    item.position.y - 25 < offsetY &&
-                    item.position.y + 25 > offsetY) {
-                    let index = Zaubercanvas.moveables.indexOf(item);
-                    Zaubercanvas.moveables.splice(index, 1);
-                    trash = false;
-                }
-            }
-        }
-    }
-    function deletemode(_event) {
-        if (_event.key == "d") {
-            trash = true;
-        }
-    }
-    function getName() {
-        let pictuteName = prompt("Geb name ein");
-        Zaubercanvas.insertPicture(pictuteName);
-    }
-})(Zaubercanvas || (Zaubercanvas = {}));
-//# sourceMappingURL=zaubercanvas.js.map
+                    item.position.y - 25 < offsetY

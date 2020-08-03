@@ -2,6 +2,7 @@
 var Zaubercanvas;
 (function (Zaubercanvas) {
     let url = "https://endabgabeeia2.herokuapp.com/";
+    let pictures = [];
     function insertPicture(_name) {
         let information = [];
         for (let figure of Zaubercanvas.moveables) {
@@ -39,18 +40,15 @@ var Zaubercanvas;
             alert("An error has occurred during saving");
         }
         console.log(responseText);
-        findPictures(responseText);
     }
-    async function findPictures(_response) {
-        console.log(_response);
-    }
-    Zaubercanvas.findPictures = findPictures;
-    async function loadPicture() {
-        let name = Zaubercanvas.savedpicture.value;
-        let response = await fetch(url + "?" + "findPicture&" + name);
+    async function findPictures() {
+        //let response: Response = await fetch(url + "?savePicture&" );
+        let response = await fetch(url);
         let responseText = await response.text();
-        console.log(responseText);
-    }
-    Zaubercanvas.loadPicture = loadPicture;
-})(Zaubercanvas || (Zaubercanvas = {}));
-//# sourceMappingURL=Server.js.map
+        let pretty = responseText.replace(/\\|\[|"|_id|{|}|insertName|]/g, "");
+        let prettier = pretty.replace(",,", ",");
+        pictures = prettier.split(",savePicture,");
+        console.log(pictures);
+        for (let item of pictures) {
+            console.log(item);
+            if (item != "" && it

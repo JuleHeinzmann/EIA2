@@ -1,5 +1,6 @@
 namespace Zaubercanvas {
     let url: string = "https://endabgabeeia2.herokuapp.com/";
+    let pictures: string[] = [];
     export interface Picture {
         positionX: number;
         positionY: number;
@@ -43,15 +44,11 @@ namespace Zaubercanvas {
             alert("An error has occurred during saving");
         }
         console.log(responseText);
-        findPictures(responseText);
     }
-    export async function findPictures(_response: string): Promise<void> {
-        console.log(_response);
-    }
-    export async function loadPicture(): Promise<void> {
-        let name: string = savedpicture.value;
-        let response: Response = await fetch(url + "?" + "findPicture&" + name);
+    export async function findPictures(): Promise<void> {
+        //let response: Response = await fetch(url + "?savePicture&" );
+        let response: Response = await fetch(url);
         let responseText: string = await response.text();
-        console.log(responseText);
-    }
-}
+        let pretty: string = responseText.replace(/\\|\[|"|_id|{|}|insertName|]/g, "");
+        let prettier: string = pretty.replace(",,", ",");
+        pictures = 

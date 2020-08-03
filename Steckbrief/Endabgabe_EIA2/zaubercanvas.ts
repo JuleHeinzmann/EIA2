@@ -4,10 +4,11 @@ namespace Zaubercanvas {
     export let moveables: Moveable[] = [];
     let backgroundImage: ImageData;
     let trash: boolean = false;
-    let maincanvas: HTMLCanvasElement;
+    export let maincanvas: HTMLCanvasElement;
     export let savedpicture: HTMLInputElement;
     function handleLoad(): void {
         drawforms();
+        findPictures();
         document.getElementById("choosecanvas")?.addEventListener("change", handleChange);
         document.getElementById("Background")?.addEventListener("change", selectBackground);
         document.getElementById("triangle")?.addEventListener("click", chooseform);
@@ -45,9 +46,10 @@ namespace Zaubercanvas {
         star.draw(crc4);
     }
 
-    function handleChange(): void {
+    export function handleChange(): void {
         //let maincanvas: HTMLCanvasElement = <HTMLCanvasElement> document.getElementById("maincanvas");
-        let target: HTMLSelectElement = <HTMLSelectElement> event?.target;
+        //let target: HTMLSelectElement = <HTMLSelectElement> event?.target;
+        let target: HTMLSelectElement = <HTMLSelectElement> document.getElementById("choosecanvas");
         if (target.value == "Klein") {
             maincanvas.height = 200;
             maincanvas.width = 400;
@@ -62,9 +64,10 @@ namespace Zaubercanvas {
         }
         
     }
-    function selectBackground(): void {
+    export function selectBackground(): void {
         //let maincanvas: HTMLCanvasElement = <HTMLCanvasElement> document.getElementById("maincanvas");
-        let target: HTMLSelectElement = <HTMLSelectElement> event?.target;
+        //let target: HTMLSelectElement = <HTMLSelectElement> event?.target;
+        let target: HTMLSelectElement = <HTMLSelectElement> document.getElementById("Background");
         let canvas: CanvasRenderingContext2D = <CanvasRenderingContext2D>maincanvas.getContext("2d");
         if (target.value == "blue") {
             canvas.fillStyle = "#AEEEEE";
@@ -166,13 +169,4 @@ namespace Zaubercanvas {
         }
 
     }
-    function deletemode(_event: KeyboardEvent): void {
-        if (_event.key == "d") {
-            trash = true;
-        }
-    }
-    function getName(): void {
-        let pictuteName: string = <string> prompt("Geb name ein");
-        insertPicture(pictuteName);
-    }
-}
+    function deletemode(_eve
